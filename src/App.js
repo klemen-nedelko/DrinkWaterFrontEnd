@@ -8,6 +8,8 @@ import Register from './components/Register';
 import MyAccount from './components/MyAccount';
 import WaterInput from './components/WaterInput';
 import AllUsers from './components/AllUsers';
+import History from './components/History';
+import AllWrittenData from './components/AllWrittenData';
 import { ThemeProvider, createTheme} from '@mui/material/styles';
 
 
@@ -15,7 +17,7 @@ function App() {
 
   const THEME = createTheme({
     typography: {
-     "fontFamily": `'Poppins', sans-serif`,
+     "fontFamily": `'MuseoModerno', cursive`,
     }
  });
   return (
@@ -44,6 +46,13 @@ function App() {
             <Route exact path="/AllUsers">
             <AllUsers/>
             </Route>
+            <Route exact path="/History">
+            <History/>
+            </Route>
+            <Route exact path="/AllWrittenData">
+            <AllWrittenData/>
+            </Route>
+            
             </Switch>
           </BrowserRouter> 
           </ThemeProvider>

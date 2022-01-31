@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Zoom from '@mui/material/Zoom';
 import { DataGrid, GridRowsProp, GridColDef  } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 
 export default function AllUsers(){
@@ -35,7 +36,6 @@ export default function AllUsers(){
             .then(function(data){
                 const info = data;
                 setInformation(info);
-                console.log(info);
               }).catch(error =>{
                 console.log(error);
             }); 
@@ -45,13 +45,13 @@ export default function AllUsers(){
         {
           field: 'firstName',
           headerName: 'First name',
-          width: 300,
+          width: 400,
           editable: true,
         },
         {
           field: 'lastName',
           headerName: 'Last name',
-          width: 300,
+          width: 400,
           editable: true,
         },
         {
@@ -86,14 +86,14 @@ export default function AllUsers(){
     return(
         <>
         <Header/>
+        <Typography variant="h3" component="h6">All registered users</Typography>
         {!isLoading  ?
-        <div style={{ height: 900, width: '100%' }}> 
+        <div style={{ height: 900, width: 'auto', marginLeft:'1em',marginRight:'1em',
+        borderRadius: '15px', }}> 
         <Zoom in={checked}>
         <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
         disableSelectionOnClick
       /></Zoom>
         </div>: <CircularProgress color="success" style={{'color': 'blue'}} />}

@@ -11,6 +11,9 @@ import { Typography } from "@mui/material";
 function TransitionUp(props) {
     return <Slide {...props} direction="up" />;
   }
+  function TransitionUpTwo(props) {
+    return <Slide {...props} direction="up" />;
+  }
 
 const useStyles = makeStyles({
     root: {
@@ -101,7 +104,7 @@ export default function WaterInput(){
               className={classes.error}
               open={openSuccess}
               onClose={handleClose}
-              key={TransitionUp}>
+              key={TransitionUpTwo}>
             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                 Successfully added amount!
             </Alert></Snackbar>

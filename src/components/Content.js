@@ -36,12 +36,19 @@ Chart.register(...registerables);
             width:'50%',
             display:'inline-block',
             height:'8em !important',
+            "&:hover,":{
+                backgroundColor:' rgba(0, 0, 0, 0.01)',
+            }
         },
         tips:{
             width:'50%',
             display:'inline-block',
             height:'8em !important',
-        }
+            "&:hover,":{
+                backgroundColor:' rgba(0, 0, 0, 0.01)',
+            }
+        },
+        
         
       });
 function Content()

@@ -57,6 +57,14 @@ export default function ButtonAppBar() {
           e.preventDefault();
           history.push('/AllUsers');
       }
+      const History = e =>{
+        e.preventDefault();
+        history.push('/History');
+      }
+      const allWrittenData = e =>{
+        e.preventDefault();
+        history.push('/AllWrittenData');
+      }
 
       const userRole = localStorage.getItem("user_role");
 
@@ -75,7 +83,10 @@ export default function ButtonAppBar() {
          </IconButton> */}
          <MenuItem onClick={goHome}>Home</MenuItem>
          <MenuItem onClick={waterInput}>Water Input</MenuItem>
+         <MenuItem onClick={History}>History</MenuItem>
+         {userRole == 'IS_ADMIN' ? <MenuItem>|Admin</MenuItem>:<></>}
          {userRole == 'IS_ADMIN' ? <MenuItem onClick={allUsers}>All Users</MenuItem>:<></>}
+         {userRole == 'IS_ADMIN' ? <MenuItem onClick={allWrittenData}>All written data</MenuItem>:<></>}
          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Hello {firstName}
          </Typography>
