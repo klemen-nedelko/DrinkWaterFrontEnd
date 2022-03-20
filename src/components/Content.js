@@ -19,7 +19,7 @@ Chart.register(...registerables);
         marginLeft:'2%',
         marginRight:'2.5%',
         display:'inline-block',
-        fontFamily:'Anton',
+        color:'#E8EEF1',
     },
     WaterCard_two:{
         width:'40%',
@@ -28,24 +28,26 @@ Chart.register(...registerables);
     },
         WaterChart:{
             width: '100%',
+            backgroundColor:'#057DCD'
         },
         WaterChart_two:{
             width: '100%',
+            backgroundColor:'#057DCD'
         },
         Total:{
             width:'50%',
             display:'inline-block',
             height:'8em !important',
-            "&:hover,":{
-                backgroundColor:' rgba(0, 0, 0, 0.01)',
+            "&:hover":{
+                backgroundColor:' rgba(255, 255, 255, 0.1)',
             }
         },
         tips:{
             width:'50%',
             display:'inline-block',
             height:'8em !important',
-            "&:hover,":{
-                backgroundColor:' rgba(0, 0, 0, 0.01)',
+            "&:hover":{
+                backgroundColor:' rgba(255, 255, 255, 0.1)',
             }
         },
         
@@ -56,13 +58,13 @@ function Content()
     const [info, setInformation] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [checked, setChecked] = useState(false);
+    const [today_Amount, setTodayAmount] = useState([]);
+    const [week_Amount, setWeekAmount] = useState([]);
     let today = new Date();
     today.setDate(today.getDate() - 7);
     let date = new Date(today).toLocaleDateString("de");
-    console.log(date);
     const waterData = info.map((information) => information.amount);
     const waterDate = info.map((information) => information.data_water_input);
-    console.log(waterDate);
     let sum = waterData.reduce(function(prev, waterData){
         return parseInt(prev) + + parseInt(waterData)
       }, 0);
@@ -90,8 +92,52 @@ function Content()
           console.log(error);
       }) 
   }
+  const todayAmount = () =>{
+    const userId = localStorage.getItem('id');
+    const url= "http://localhost:8000/api/amountDisplayDay";
+    const request = new Request(url,{
+            method:'get',
+            headers:{
+            users_id:userId,     
+        }
+  });
+  return fetch(request).then(response =>{
+    if (response.status < 200 || response.status >= 300) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+  }).then(function(data){
+      const today_Amount = data;
+      setTodayAmount(today_Amount);
+    }).catch(error =>{
+      console.log(error);
+  }) 
+}
+const weekAmount = () =>{
+    const userId = localStorage.getItem('id');
+    const url= "http://localhost:8000/api/amountDisplayWeek?users_id=" + userId;
+    const request = new Request(url,{
+            method:'get',
+            headers:{
+            users_id:userId,     
+        }
+  });
+  return fetch(request).then(response =>{
+    if (response.status < 200 || response.status >= 300) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+  }).then(function(data){
+      const week_Amount = data;
+      setWeekAmount(week_Amount);
+    }).catch(error =>{
+      console.log(error);
+  }) 
+}
     useEffect(() => {
         setTimeout(function(){getWater()},2000);
+        setTimeout(function(){todayAmount()},2000);
+        setTimeout(function(){weekAmount()},2000);
         setTimeout(function(){setIsLoading(false)},2200);
         setTimeout(function(){setChecked(true)},2500);
         },[]);
@@ -101,7 +147,8 @@ function Content()
         <Header/>
         <div>
             <Card className={classes.WaterCard}>
-    <Typography variant="h2" component="h6">Chart</Typography>
+    <Typography variant="h2" component="h6" style={{'color': 
+        '#E8EEF1',backgroundColor:'#057DCD'}}>Chart</Typography>
     <div className={classes.WaterChart}> 
     {!isLoading  ?
     <>
@@ -113,10 +160,11 @@ function Content()
                                 type: "line",
                                 label: 'Water Amount',
                                 tension: 0.3,
+                                color: 'rgba(183, 207, 220, 1)',
                                 fill: true,
                                 data: info.map((information) => information.amount),
-                                backgroundColor: [
-                                    'rgba(147, 202, 237,0.2)',
+                                borderColor: [
+                                    'rgba(183, 207, 220, 1)',
                                 ],
                             },
                             ],
@@ -131,11 +179,12 @@ function Content()
                         }} />
                         </>
         : <CircularProgress color="success" style={{'color': 
-        'rgba(7, 102, 237,0.6)'}} />}
+        'rgba(183, 207, 220, 1)'}} />}
     </div>
     </Card>
     <Card className={classes.WaterCard_two}>
-    <Typography variant="h2" component="h6">Pie</Typography>
+    <Typography variant="h2" component="h6" style={{'color': 
+        '#E8EEF1',backgroundColor:'#057DCD'}}>Pie</Typography>
     <div className={classes.WaterChart_two}> 
     {!isLoading  ?
     <>
@@ -149,11 +198,11 @@ function Content()
                                 fill: true,
                                 data: info.map((information) => information.amount),
                                 backgroundColor: [
-                                    'rgba(147, 202, 237,0.4)',
-                                    'rgba(147, 102, 237,0.4)',
-                                    'rgba(7, 102, 237,0.4)',
-                                    'rgba(7, 102, 27,0.4)',
-                                    'rgba(72, 12, 223,0.4)',
+                                    'rgba(183, 207, 220, 1)',
+                                    'rgba(106, 171, 210, 1)',
+                                    'rgba(56, 94, 114, 1)',
+                                    'rgba(7, 102, 27,0.6)',
+                                    'rgba(72, 12, 223,0.6)',
                                 ],
                             },
                             ],
@@ -164,23 +213,24 @@ function Content()
                             maintainAspectRatio: false,}}/>
                         </>
         : <CircularProgress color="success" style={{'color': 
-        'rgba(7, 102, 237,0.6)'}} />}
+        'rgba(183, 207, 220, 1)'}} />}
     </div>
     </Card>
 
 
     <Card className={classes.WaterCard}>
-    <Typography variant="h2" component="h6">Statistics</Typography>
+    <Typography variant="h2" component="h6" style={{'color': 
+        '#E8EEF1',backgroundColor:'#057DCD'}}>Statistics</Typography>
     <div className={classes.WaterChart}> 
     {!isLoading  ?
     <>
     <Zoom in={checked}>
-        <Card  className={classes.Total}>
+        <Card  className={classes.Total} style={{backgroundColor:'#057DCD'}}>
             <Typography variant="h5" component="h6">Today</Typography>
             <Typography variant="h6" component="h6">
-            <CountUp start={0} end={today} delay={0}>
+            <CountUp start={0} end={today_Amount} delay={0}>
             {({ countUpRef }) => (
-             <div style={{'color': 'rgba(7, 102, 27,0.6)'}} >
+             <div style={{'color': 'rgba(183, 207, 220, 1)'}} >
              <span ref={countUpRef} /> ml
             </div>
             )}
@@ -189,12 +239,12 @@ function Content()
             </Card>
             </Zoom>
             <Zoom in={checked} style={{ transitionDelay: checked ? '200ms' : '0ms' }}>
-        <Card  className={classes.Total}>
+        <Card  className={classes.Total} style={{backgroundColor:'#057DCD'}}>
         <Typography variant="h5" component="h6">This week</Typography>
-        <Typography variant="h6" component="h6">
-            <CountUp start={0} end={sum} delay={0}>
+        <Typography variant="h6" component="h6" >
+            <CountUp start={0} end={week_Amount} delay={0}>
             {({ countUpRef }) => (
-             <div style={{'color': 'blue'}} >
+             <div style={{'color': 'rgba(183, 207, 220, 1)'}} >
              <span ref={countUpRef} /> ml
             </div>
             )}
@@ -203,12 +253,12 @@ function Content()
         </Card>
         </Zoom>
         <Zoom in={checked} style={{ transitionDelay: checked ? '300ms' : '0ms' }}>
-        <Card  className={classes.Total}>
+        <Card  className={classes.Total} style={{backgroundColor:'#057DCD'}}>
         <Typography variant="h5" component="h6">Avarage</Typography>
         <Typography variant="h6" component="h6">
             <CountUp start={0} end={average} delay={0}>
             {({ countUpRef }) => (
-             <div style={{'color': 'red'}} >
+             <div style={{'color': 'rgba(183, 207, 220, 1)'}} >
              <span ref={countUpRef} /> ml
             </div>
             )}
@@ -217,12 +267,12 @@ function Content()
         </Card>
         </Zoom>
         <Zoom in={checked} style={{ transitionDelay: checked ? '400ms' : '0ms' }}>
-        <Card  className={classes.Total}>
+        <Card  className={classes.Total}style={{backgroundColor:'#057DCD'}} >
         <Typography variant="h5" component="h6">Total</Typography>
         <Typography variant="h6" component="h6">
             <CountUp start={0} end={sum} delay={0} >
             {({ countUpRef }) => (
-             <div style={{'color': 'green'}} >
+             <div style={{'color': 'rgba(183, 207, 220, 1)'}} >
              <span ref={countUpRef} /> ml
             </div>
             )}
@@ -236,7 +286,8 @@ function Content()
     </div>
     </Card>
     <Card className={classes.WaterCard_two}>
-    <Typography variant="h2" component="h6">Tips</Typography>
+    <Typography variant="h2" component="h6" style={{'color': 
+        '#E8EEF1',backgroundColor:'#057DCD'}}>Tips</Typography>
     <div className={classes.WaterChart_two}> 
     {!isLoading  ?
     <>

@@ -18,7 +18,8 @@ function App() {
   const THEME = createTheme({
     typography: {
      "fontFamily": `'MuseoModerno', cursive`,
-    }
+      "color":'#d2d2d7',
+    },
  });
   return (
     <div className="App">

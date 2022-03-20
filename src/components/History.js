@@ -43,18 +43,23 @@ export default function History(){
       }) 
   }
     const columns = [
-        { field: 'id', headerName: 'ID', width: 150 },
+        { field: 'id', headerName: 'ID', width: 300 },
         {
           field: 'Amount',
           headerName: 'Amount',
-          width: 300,
+          width: 600,
           editable: true,
         },
         {
           field: 'Date',
           headerName: 'Date',
-          width: 300,
+          width: 600,
           editable: true,
+        },
+        {
+          field: 'Edit',
+          headerName: 'Edit',
+          width: 500,
         },
       ];
       const deleteUser = e => {
@@ -62,8 +67,11 @@ export default function History(){
             <Button style={{ backgroundColor:'blue'}}>Delete User</Button>
         );
       }
+      const editAmount = () => {
+
+      }
       const rows = useMemo(
-        () => info.map((row, index) => ({ ...row, id: row.id, Amount: row.amount, Date: row.date_water_input})),
+        () => info.map((row, index) => ({ ...row, id: row.id, Amount: row.amount, Date: row.date_water_input, Edit: editAmount()})),
         [info]
       );
     useEffect(() => {

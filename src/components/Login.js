@@ -12,23 +12,33 @@ import { Snackbar,Slide,Alert } from '@mui/material';
 const useStyles = makeStyles({
     root: {
       marginTop: '10em',
+      backgroundColor:' !important',
+      borderStyle:'none !important',
     },
     loginCard:{
         marginLeft:'auto !important',
         marginRight:'auto !important',
         width: '25em',
+        borderStyle:'none !important',
+        
     },
     input:{
         display: 'block !important',
         marginTop:'1em! important',
         marginBottom:'1em! important',
-        paddingRight:'5px !important',
+        marginLeft:'auto !important',
+        marginRight:'auto !important',
+        width: '80% !important',
+        borderRadius: '20px !important',
+        backgroundColor:'#fff',
+        borderStyle:'none !important',
     },
     buttonForgot:{
         display: 'block !important',
         marginTop:'1em!important',
         marginBottom:'1em!important',
         padding: '1em !important',
+        color:'#000 !important',
     },
     img:{
         height: '20px !important',
